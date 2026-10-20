@@ -28,13 +28,17 @@ public class ProjetoCalculadoraIMC extends Application {
         //Botão para calcular o IMC
         Button botaoCalcular = new Button("Calcular IMC"); // Criando o botão.
         botaoCalcular.setOnAction (e -> {
-            double peso = Double.parseDouble(campoPeso.getText()); // Transformando o texto(String) recebido em Double.
-            double altura = Double.parseDouble(campoAltura.getText()); // Transformando o texto(String) recebido em Double.
-            
-            double imc = peso / (altura * altura);
-            etiquetaResultado.setText(String.format("Seu IMC é: %.2f", imc)); //O Format recebe a String e transforma em ponto flutuante com duas casas após a virgula (2f)
+            try {
+                double peso = Double.parseDouble(campoPeso.getText().replace(",",".")); // Transformando o texto(String) recebido em Double.
+                double altura = Double.parseDouble(campoAltura.getText().replace(",",".")); // Transformando o texto(String) recebido em Double.
+                
+                double imc = peso / (altura * altura);
+                etiquetaResultado.setText(String.format("Seu IMC é: %.2f", imc)); //O Format recebe a String e transforma em ponto flutuante com duas casas após a virgula (2f)
+            } catch (NumberFormatException ex) {
+                etiquetaResultado.setText("Por favor, insira números válidos para peso e altura.");
+            }
         });
-
+        
         //Layout vertical
         VBox layout = new VBox(10, etiquetaPeso, campoPeso, etiquetaAltura, campoAltura, botaoCalcular, etiquetaResultado);
         layout.setPadding(new Insets(10)); // espaçamento de 10px
